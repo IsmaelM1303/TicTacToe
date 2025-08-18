@@ -1,21 +1,19 @@
-const http = require('http');
-const fs = require('fs');
+const express = require('express');
 const path = require('path');
+const fetch = require('node-fetch');
 
-const server = http.createServer((req, res) => {
-    const filePath = path.join(__dirname, 'public/pages/index.html');
+const app = express();
 
-    fs.readFile(filePath, (err, data) => {
-        if (err) {
-            res.statusCode = 500;
-            res.setHeader('Content-Type', 'text/plain');
-            res.end('Error al cargar el archivo HTML');
-        } else {
-            res.statusCode = 200;
-            res.setHeader('Content-Type', 'text/html');
-            res.end(data);
-        }
-    });
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Ruta principal
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'pages/index.html'));
+});
+
+const PORT = 3000;
+app.listen(PORT, () => {
+    console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
 
 server.listen(3000, () => {
