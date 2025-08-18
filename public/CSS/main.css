@@ -1,0 +1,17 @@
+#contenedorCasillas{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 10px;
+    width: 300px;
+    height: 300px;
+}
+
+.item {
+    background-color: #4CAF50;
+    color: white;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
