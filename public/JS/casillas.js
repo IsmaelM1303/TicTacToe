@@ -6,10 +6,10 @@ const contenedorCasillas = document.getElementById("contenedorCasillas")
 const tablero = Array(9).fill("");
 const resultado = document.getElementById("mostrarResultado")
 //funciones de aumento y decrecimiento de contador
-function incContador(){
+function incContador() {
     contador++
 }
-function decContador(){
+function decContador() {
     contador--
 }
 function obtenerContador() {
@@ -31,13 +31,14 @@ function crearCasillas(n) {
         casilla.className = "casilla";
         casilla.id = i;
         contenedorCasillas.appendChild(casilla);
-
+        resultado.innerHTML = "Turno de jugador 'X'";
         casilla.addEventListener("click", () => {
             if (n === 1) {
                 validacion(casilla);
             } else if (n === 2) {
                 if (contador === 1) {
                     validacionPve(casilla);
+
                 } else {
                     resultado.innerHTML = "Espera tu turno...";
                 }
@@ -70,17 +71,18 @@ function limpiarCasillas() {
 //Esta es para que ponga X o O dependiendo del contador que está arriba
 function validacion(casilla) {
     const marca = document.createElement("h2")
+    //Aquí no sé por qué pero hay que poner invertido quién va para que se muestre bien, esto se puede mejorar
     if (contador == 1 && casilla.textContent != "O") {
         marca.textContent = "X"
         casilla.textContent = marca.textContent
         contador++
-        resultado.innerHTML = "Turno de jugador 'X'"
+        resultado.innerHTML = "Turno de jugador 'O'"
 
     } else if (contador == 2 && casilla.textContent != "X") {
         marca.textContent = "O"
         casilla.textContent = marca.textContent
         contador--
-        resultado.innerHTML = "Turno de jugador 'O'"
+        resultado.innerHTML = "Turno de jugador 'X'"
 
     }
     buscarResultado(casilla.id, marca.textContent)
@@ -96,7 +98,7 @@ function buscarResultado(posicion, marca) {
         [0, 1, 2], [3, 4, 5], [6, 7, 8], // Horizontales
         [0, 3, 6], [1, 4, 7], [2, 5, 8], // Verticales
         [0, 4, 8], [2, 4, 6]             // Diagonales
-    ];
+    ]
 
     //Esto es lo que compara
     const hayGanador = combinacionesGanadoras.some(([a, b, c]) =>
@@ -128,4 +130,4 @@ function buscarResultado(posicion, marca) {
 }
 
 
-export { crearCasillas, limpiarCasillas, iniciarPvp, validacion, buscarResultado, incContador, decContador, obtenerContador}
+export { crearCasillas, limpiarCasillas, iniciarPvp, validacion, buscarResultado, incContador, decContador, obtenerContador }
