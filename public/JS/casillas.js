@@ -1,24 +1,53 @@
 //Importaciones
-
-//datos globales
-let contador = 0
+import { validacionPve } from "./ia.js";
+//Datos globales
+export let contador = 0
 const contenedorCasillas = document.getElementById("contenedorCasillas")
 const tablero = Array(9).fill("");
 const resultado = document.getElementById("mostrarResultado")
-
-function crearCasillas() {
-    limpiarCasillas()
-    contador = 1
-    for (let i = 0; i < 9; i++) {
-        const casilla = document.createElement("div")
-        casilla.className = "casilla"
-        casilla.id = i
-        contenedorCasillas.appendChild(casilla)
-        casilla.addEventListener("click", () => validacion(casilla))
-
-    }
-
+//funciones de aumento y decrecimiento de contador
+function incContador(){
+    contador++
 }
+function decContador(){
+    contador--
+}
+function obtenerContador() {
+    return contador;
+}
+
+//Esta función inicia el PVP
+function iniciarPvp() {
+    crearCasillas(1)
+}
+
+// Esto crea las casillas
+function crearCasillas(n) {
+    limpiarCasillas();
+    contador = 1;
+
+    for (let i = 0; i < 9; i++) {
+        const casilla = document.createElement("div");
+        casilla.className = "casilla";
+        casilla.id = i;
+        contenedorCasillas.appendChild(casilla);
+
+        casilla.addEventListener("click", () => {
+            if (n === 1) {
+                validacion(casilla);
+            } else if (n === 2) {
+                if (contador === 1) {
+                    validacionPve(casilla);
+                } else {
+                    resultado.innerHTML = "Espera tu turno...";
+                }
+            }
+        });
+    }
+}
+
+
+//Esto limpia las cosas
 function limpiarCasillas() {
     // Vaciar el array del tablero
     for (let i = 0; i < tablero.length; i++) {
@@ -57,10 +86,7 @@ function validacion(casilla) {
     buscarResultado(casilla.id, marca.textContent)
 }
 
-function iniciarPvp() {
-    crearCasillas()
-}
-
+//Esto busca resultados ganadores o empates
 function buscarResultado(posicion, marca) {
     //Creo las variables de la cuadrícula
     tablero[posicion] = marca
@@ -92,6 +118,7 @@ function buscarResultado(posicion, marca) {
                 limpiarCasillas()
             }, 2000);
         }
+        //Esto es el empate
     } else if (tablero.every(casilla => casilla !== "")) {
         resultado.innerHTML = "¡Empate!"
         setTimeout(() => {
@@ -101,4 +128,4 @@ function buscarResultado(posicion, marca) {
 }
 
 
-export { crearCasillas, limpiarCasillas, iniciarPvp, validacion }
+export { crearCasillas, limpiarCasillas, iniciarPvp, validacion, buscarResultado, incContador, decContador, obtenerContador}
