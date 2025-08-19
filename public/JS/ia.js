@@ -1,15 +1,8 @@
 //Importaciones
-import { crearCasillas, buscarResultado, incContador, decContador, obtenerContador } from "./casillas.js";
+import { crearCasillas, buscarResultado, incContador, decContador, obtenerContador, juegoTerminado} from "./casillas.js";
 
 //Datos globales
 const resultado = document.getElementById("mostrarResultado")
-
-//Estas son las combinaciones ganadoras
-const combinacionesGanadoras = [
-    [0, 1, 2], [3, 4, 5], [6, 7, 8], // Horizontales
-    [0, 3, 6], [1, 4, 7], [2, 5, 8], // Verticales
-    [0, 4, 8], [2, 4, 6]             // Diagonales
-]
 
 //Esta función inicia el PVE
 function iniciarPve() {
@@ -37,44 +30,49 @@ function validacionPve(casilla) {
     }
 }
 
-//Esta fue la primera versión del bot
-//function bot() {
-//const casillas = document.querySelectorAll(".casilla");
-//    let jugada;
-//    do {
-//        jugada = Math.floor(Math.random() * casillas.length);
-//    } while (casillas[jugada].textContent !== "");
-//
-//    casillas[jugada].textContent = "O";
-//    buscarResultado(casillas[jugada].id, "O");
-//}
-
-
-
-
-//Esta versión del bot es con minimax, se buscaron tutoriales y explicaciones desde copilot. Falta ver si se puede refactorizar
+//Esta función combina la primera versión con el minimax para que no sea invencible
 function bot() {
-    const casillas = document.querySelectorAll(".casilla")
-    const tablero = Array.from(casillas).map(c => c.textContent) //Esto es el desgloce de lo que dice cada casilla
-    let mejorJugada
-    let mejorPuntaje = -Infinity
+    if (juegoTerminado) return;
 
-    for (let i = 0; i < tablero.length; i++) {
-        if (tablero[i] === "") {
-            tablero[i] = "O";
-            const puntaje = simulacion(tablero, 0, false);
-            tablero[i] = "";
-            if (puntaje > mejorPuntaje) {
-                mejorPuntaje = puntaje;
-                mejorJugada = i;
+    const numero = Math.floor(Math.random() * 20) + 1;
+    console.log(numero);
+    
+    const casillas = document.querySelectorAll(".casilla");
+
+    //Esto es para que juegue de manera aleatoria
+    if ((numero % 2 === 0 && numero >10) || (numero % 2 !== 0 && numero < 10)) {
+        let jugada;
+        do {
+            jugada = Math.floor(Math.random() * casillas.length);
+        } while (casillas[jugada].textContent !== "");
+
+        casillas[jugada].textContent = "O";
+        buscarResultado(casillas[jugada].id, "O");
+    } else {
+        //Esto es para que juegue de manera analítica con minimax
+        const tablero = Array.from(casillas).map(c => c.textContent);
+        let mejorJugada;
+        let mejorPuntaje = -Infinity;
+
+        for (let i = 0; i < tablero.length; i++) {
+            if (tablero[i] === "") {
+                tablero[i] = "O";
+                const puntaje = simulacion(tablero, 0, false);
+                tablero[i] = "";
+                if (puntaje > mejorPuntaje) {
+                    mejorPuntaje = puntaje;
+                    mejorJugada = i;
+                }
             }
         }
-    }
-    if (typeof mejorJugada === "number" && casillas[mejorJugada]) {
-        casillas[mejorJugada].textContent = "O";
-        buscarResultado(casillas[mejorJugada].id, "O");
+
+        if (typeof mejorJugada === "number" && casillas[mejorJugada]) {
+            casillas[mejorJugada].textContent = "O";
+            buscarResultado(casillas[mejorJugada].id, "O");
+        }
     }
 }
+
 
 //Esto es lo que simula las partidas
 function simulacion(tablero, profundidad, esBot) {
