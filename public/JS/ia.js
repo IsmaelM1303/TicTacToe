@@ -12,7 +12,7 @@ function validacionPve(casilla) {
     const marca = document.createElement("h2");
     const contadorActual = obtenerContador();
     console.log(contadorActual);
-    
+
     if (contadorActual != 2) {
         if (contadorActual == 1 && casilla.textContent != "O") {
             marca.textContent = "X";
@@ -20,7 +20,7 @@ function validacionPve(casilla) {
             incContador();
             resultado.innerHTML = "Turno de jugador 'X'";
             console.log(contadorActual);
-            
+
         }
 
     } else if (contadorActual == 2 && casilla.textContent != "X") {
@@ -28,13 +28,14 @@ function validacionPve(casilla) {
         decContador();
         resultado.innerHTML = "Turno de jugador 'O'";
         console.log(contadorActual);
-        
+
     }
 
     buscarResultado(casilla.id, marca.textContent);
 }
 
 function bot() {
+    console.log("hola");
 
 }
 
