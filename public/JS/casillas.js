@@ -5,6 +5,12 @@ export let contador = 0
 const contenedorCasillas = document.getElementById("contenedorCasillas")
 const tablero = Array(9).fill("");
 const resultado = document.getElementById("mostrarResultado")
+let modo
+
+function cambiarModo() {
+    modo = 2
+    return modo
+}
 //funciones de aumento y decrecimiento de contador
 function incContador() {
     contador++
@@ -18,14 +24,37 @@ function obtenerContador() {
 
 //Esta función inicia el PVP
 function iniciarPvp() {
-    crearCasillas(1)
+    modo = 1
+    crearCasillas(modo)
+}
+
+//Funciones de verificación de juego
+let juegoTerminado = false;
+
+//Esta también crea un marcador que se verá en la sección de marcadores
+function terminarJuego(num, j1, j2) {
+    juegoTerminado = true;
+    const ahora = new Date();
+    const fechaHora = ahora.toLocaleString();
+    console.log(fechaHora)
+    console.log(num);
+    console.log(j1);
+    console.log(j2);
+    
+    
+    
+
+
+}
+
+function reiniciarJuego() {
+    juegoTerminado = false;
 }
 
 // Esto crea las casillas
 function crearCasillas(n) {
     limpiarCasillas();
     contador = 1;
-
     for (let i = 0; i < 9; i++) {
         const casilla = document.createElement("div");
         casilla.className = "casilla";
@@ -89,45 +118,75 @@ function validacion(casilla) {
 }
 
 //Esto busca resultados ganadores o empates
+
 function buscarResultado(posicion, marca) {
-    //Creo las variables de la cuadrícula
-    tablero[posicion] = marca
+    if (juegoTerminado) return;
 
-    //Estas son las combinaciones ganadoras
+    tablero[posicion] = marca;
+
     const combinacionesGanadoras = [
-        [0, 1, 2], [3, 4, 5], [6, 7, 8], // Horizontales
-        [0, 3, 6], [1, 4, 7], [2, 5, 8], // Verticales
-        [0, 4, 8], [2, 4, 6]             // Diagonales
-    ]
+        [0, 1, 2], [3, 4, 5], [6, 7, 8],
+        [0, 3, 6], [1, 4, 7], [2, 5, 8],
+        [0, 4, 8], [2, 4, 6]
+    ];
 
-    //Esto es lo que compara
     const hayGanador = combinacionesGanadoras.some(([a, b, c]) =>
         tablero[a] !== "" && tablero[a] === tablero[b] && tablero[b] === tablero[c]
     );
 
-    //Esto es el resultado
     if (hayGanador) {
-        //Como el contador cambia con el click, cuando se gana cambia y se muestra al inverso. Por eso lo pongo al revés para que invierta esa inversión
-        if (contador == 2) {
-            resultado.innerHTML = "Gana jugador 1"
-            setTimeout(() => {
-                limpiarCasillas()
-            }, 2000);
+        juegoTerminado = true;
+
+        if (modo === 1) {
+            if (contador == 2) {
+                resultado.innerHTML = "Gana jugador 1";
+                setTimeout(() => {
+                    terminarJuego(1, 1, 0);
+                    limpiarCasillas();
+                    juegoTerminado = false;
+                }, 2000);
+            } else if (contador == 1) {
+                resultado.innerHTML = "Gana jugador 2";
+                setTimeout(() => {
+                    terminarJuego(1, 0, 1);
+                    limpiarCasillas();
+                    juegoTerminado = false;
+                }, 2000);
+            }
+        } else if (modo === 2) {
+            // PvE: marca determina quién ganó
+            if (marca === "X") {
+                resultado.innerHTML = "¡Gana el jugador!";
+                setTimeout(() => {
+                    terminarJuego(2, 1, 0); // modo 2, humano gana
+                    limpiarCasillas();
+                    juegoTerminado = false;
+                }, 2000);
+            } else if (marca === "O") {
+                resultado.innerHTML = "¡Gana la computadora!";
+                setTimeout(() => {
+                    terminarJuego(2, 0, 1); // modo 2, computadora gana
+                    limpiarCasillas();
+                    juegoTerminado = false;
+                }, 2000);
+            }
         }
-        else if (contador == 1) {
-            resultado.innerHTML = "Gana jugador 2"
-            setTimeout(() => {
-                limpiarCasillas()
-            }, 2000);
-        }
-        //Esto es el empate
+
     } else if (tablero.every(casilla => casilla !== "")) {
-        resultado.innerHTML = "¡Empate!"
+        resultado.innerHTML = "¡Empate!";
+        juegoTerminado = true;
+
         setTimeout(() => {
-            limpiarCasillas()
+            if (modo === 1) {
+                terminarJuego(1, 0, 0); // empate en PvP
+            } else if (modo === 2) {
+                terminarJuego(2, 0, 0); // empate en PvE
+            }
+            limpiarCasillas();
+            juegoTerminado = false;
         }, 2000);
     }
 }
 
 
-export { crearCasillas, limpiarCasillas, iniciarPvp, validacion, buscarResultado, incContador, decContador, obtenerContador }
+export { crearCasillas, limpiarCasillas, iniciarPvp, validacion, buscarResultado, incContador, decContador, obtenerContador, juegoTerminado, terminarJuego, reiniciarJuego, cambiarModo}

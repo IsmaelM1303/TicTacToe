@@ -1,12 +1,13 @@
 //Importaciones
-import { crearCasillas, buscarResultado, incContador, decContador, obtenerContador, juegoTerminado} from "./casillas.js";
+import { crearCasillas, buscarResultado, incContador, decContador, obtenerContador, juegoTerminado, cambiarModo} from "./casillas.js";
 
 //Datos globales
 const resultado = document.getElementById("mostrarResultado")
 
 //Esta función inicia el PVE
 function iniciarPve() {
-    crearCasillas(2)
+    const pve = cambiarModo()
+    crearCasillas(pve)
 }
 function validacionPve(casilla) {
     const marca = document.createElement("h2");
@@ -32,25 +33,38 @@ function validacionPve(casilla) {
 
 //Esta función combina la primera versión con el minimax para que no sea invencible
 function bot() {
-    if (juegoTerminado) return;
+    const casillas = document.querySelectorAll(".casilla");
+    if (juegoTerminado) {
+        buscarResultado()
+        return
+    };
 
     const numero = Math.floor(Math.random() * 20) + 1;
     console.log(numero);
     
-    const casillas = document.querySelectorAll(".casilla");
 
     //Esto es para que juegue de manera aleatoria
     if ((numero % 2 === 0 && numero >10) || (numero % 2 !== 0 && numero < 10)) {
-        let jugada;
+        aleatorio(casillas)
+    } else {
+        //Esto es para que juegue de manera analítica con minimax
+        minimax(casillas)
+    }
+}
+//Esto hace que funcione el jugar aleatoriamente
+function aleatorio(casillas){
+    let jugada;
         do {
             jugada = Math.floor(Math.random() * casillas.length);
         } while (casillas[jugada].textContent !== "");
 
         casillas[jugada].textContent = "O";
         buscarResultado(casillas[jugada].id, "O");
-    } else {
-        //Esto es para que juegue de manera analítica con minimax
-        const tablero = Array.from(casillas).map(c => c.textContent);
+}
+
+//Esto hace que funcione el jugar analizando la mejor jugada
+function minimax(casillas){
+    const tablero = Array.from(casillas).map(c => c.textContent);
         let mejorJugada;
         let mejorPuntaje = -Infinity;
 
@@ -70,7 +84,6 @@ function bot() {
             casillas[mejorJugada].textContent = "O";
             buscarResultado(casillas[mejorJugada].id, "O");
         }
-    }
 }
 
 
