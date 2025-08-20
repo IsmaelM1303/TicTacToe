@@ -1,5 +1,16 @@
 {
-    "marcador": [
-        
-    ]
+  "marcador": [
+    {
+      "id": "66ac",
+      "fecha": "20/8/2025, 2:37:55 p. m.",
+      "modo": "Jugador contra jugador",
+      "desenlace": "Ganó el jugador 1"
+    },
+    {
+      "id": "90d6",
+      "fecha": "20/8/2025, 2:38:41 p. m.",
+      "modo": "Jugador contra jugador",
+      "desenlace": "Es empate"
+    }
+  ]
 }
