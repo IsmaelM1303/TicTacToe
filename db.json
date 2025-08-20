@@ -11,6 +11,12 @@
       "fecha": "20/8/2025, 2:38:41 p. m.",
       "modo": "Jugador contra jugador",
       "desenlace": "Es empate"
+    },
+    {
+      "id": "47c0",
+      "fecha": "20/8/2025, 3:16:38 p. m.",
+      "modo": "Jugador contra jugador",
+      "desenlace": "Ganó el jugador 1"
     }
   ]
 }

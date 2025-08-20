@@ -1,6 +1,7 @@
 //Importaciones
 import { validacionPve } from "./ia.js";
-import { getMarcador, createMarcador, deleteMarcador, updateMarcador } from "../services/CRUD_marcadores.js";
+import {createMarcador} from "../services/CRUD_marcadores.js";
+import { mostrarMarcadores } from "./marcadores.js";
 //Datos globales
 export let contador = 0
 const contenedorCasillas = document.getElementById("contenedorCasillas")
@@ -65,8 +66,8 @@ function terminarJuego(num, j1, j2) {
         modo: modoJuego,
         desenlace: desenlaceJuego
     }
-    console.log(nuevoMarcador);
     createMarcador(nuevoMarcador)
+    mostrarMarcadores(  )
 }
 
 function reiniciarJuego() {
