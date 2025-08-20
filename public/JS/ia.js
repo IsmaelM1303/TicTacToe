@@ -12,7 +12,6 @@ function iniciarPve() {
 function validacionPve(casilla) {
     const marca = document.createElement("h2");
     const contadorActual = obtenerContador();
-    console.log("Contador actual:", contadorActual);
 
     // Turno de X
     if (contadorActual === 1 && casilla.textContent === "") {
@@ -40,7 +39,6 @@ function bot() {
     };
 
     const numero = Math.floor(Math.random() * 20) + 1;
-    console.log(numero);
     
 
     //Esto es para que juegue de manera aleatoria

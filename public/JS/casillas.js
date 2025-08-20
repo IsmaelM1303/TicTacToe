@@ -36,10 +36,35 @@ function terminarJuego(num, j1, j2) {
     juegoTerminado = true;
     const ahora = new Date();
     const fechaHora = ahora.toLocaleString();
-    console.log(fechaHora)
-    console.log(num);
-    console.log(j1);
-    console.log(j2);
+    
+    let modoJuego
+    let desenlaceJuego
+    if (num == 1) {
+        modoJuego= "Jugador contra jugador"
+    } else if (num == 2) {
+        modoJuego = "Jugador contra la máquina"
+    }
+
+    
+    if (j1 === j2) {
+    desenlaceJuego = "Es empate";
+} else {
+    const ganaJ1 = j1 > j2;
+
+    //Descubrí una forma nueva de declarar condicionales
+    if (num === 1) {
+        desenlaceJuego = ganaJ1 ? "Ganó el jugador 1" : "Ganó el jugador 2";
+    } else if (num === 2) {
+        desenlaceJuego = ganaJ1 ? "Ganó el jugador" : "Ganó la máquina";
+    }
+}
+
+    const nuevoMarcador = {
+        fecha: fechaHora,
+        modo: modoJuego,
+        desenlace: desenlaceJuego
+    }
+    console.log(nuevoMarcador);
     
     
     
