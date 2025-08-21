@@ -1,24 +1,26 @@
 //Importaciones
 import { validacionPve } from "./ia.js";
-import {createMarcador} from "../services/CRUD_marcadores.js";
+import { createMarcador } from "../services/CRUD_marcadores.js";
 import { mostrarMarcadores } from "./marcadores.js";
+
 //Datos globales
-export let contador = 0
-const contenedorCasillas = document.getElementById("contenedorCasillas")
+export let contador = 0;
+const contenedorCasillas = document.getElementById("contenedorCasillas");
 const tablero = Array(9).fill("");
-const resultado = document.getElementById("mostrarResultado")
-let modo
+const resultado = document.getElementById("mostrarResultado");
+let modo;
 
 function cambiarModo() {
-    modo = 2
-    return modo
+    modo = 2;
+    return modo;
 }
+
 //funciones de aumento y decrecimiento de contador
 function incContador() {
-    contador++
+    contador++;
 }
 function decContador() {
-    contador--
+    contador--;
 }
 function obtenerContador() {
     return contador;
@@ -26,8 +28,8 @@ function obtenerContador() {
 
 //Esta función inicia el PVP
 function iniciarPvp() {
-    modo = 1
-    crearCasillas(modo)
+    modo = 1;
+    crearCasillas(modo);
 }
 
 //Funciones de verificación de juego
@@ -39,35 +41,34 @@ function terminarJuego(num, j1, j2) {
     const ahora = new Date();
     const fechaHora = ahora.toLocaleString();
 
-    let modoJuego
-    let desenlaceJuego
+    let modoJuego;
+    let desenlaceJuego;
     if (num == 1) {
-        modoJuego= "Jugador contra jugador"
+        modoJuego = "Jugador contra jugador";
     } else if (num == 2) {
-        modoJuego = "Jugador contra la máquina"
+        modoJuego = "Jugador contra la computadora";
     }
 
-    
     if (j1 === j2) {
-    desenlaceJuego = "Es empate";
-} else {
-    const ganaJ1 = j1 > j2;
+        desenlaceJuego = "Es empate";
+    } else {
+        const ganaJ1 = j1 > j2;
 
-    //Descubrí una forma nueva de declarar condicionales
-    if (num === 1) {
-        desenlaceJuego = ganaJ1 ? "Gana el jugador 1" : "Gana el jugador 2";
-    } else if (num === 2) {
-        desenlaceJuego = ganaJ1 ? "Gana el jugador" : "Gana la máquina";
+        //Descubrí una forma nueva de declarar condicionales
+        if (num === 1) {
+            desenlaceJuego = ganaJ1 ? "Gana el jugador 1" : "Gana el jugador 2";
+        } else if (num === 2) {
+            desenlaceJuego = ganaJ1 ? "Gana el jugador" : "Gana la computadora";
+        }
     }
-}
 
     const nuevoMarcador = {
         fecha: fechaHora,
         modo: modoJuego,
         desenlace: desenlaceJuego
-    }
-    createMarcador(nuevoMarcador)
-    mostrarMarcadores(  )
+    };
+    createMarcador(nuevoMarcador);
+    mostrarMarcadores();
 }
 
 function reiniciarJuego() {
@@ -78,27 +79,25 @@ function reiniciarJuego() {
 function crearCasillas(n) {
     limpiarCasillas();
     contador = 1;
+
     for (let i = 0; i < 9; i++) {
         const casilla = document.createElement("div");
         casilla.className = "casilla";
         casilla.id = i;
         contenedorCasillas.appendChild(casilla);
         resultado.innerHTML = "Turno de jugador 'X'";
+
         casilla.addEventListener("click", () => {
+            if (casilla.textContent !== "") return;
+
             if (n === 1) {
                 validacion(casilla);
             } else if (n === 2) {
-                if (contador === 1) {
-                    validacionPve(casilla);
-
-                } else {
-                    resultado.innerHTML = "Espera tu turno...";
-                }
+                validacionPve(casilla);
             }
         });
     }
 }
-
 
 //Esto limpia las cosas
 function limpiarCasillas() {
@@ -107,7 +106,7 @@ function limpiarCasillas() {
         tablero[i] = "";
     }
 
-    contenedorCasillas.innerHTML = ""
+    contenedorCasillas.innerHTML = "";
 
     // Vaciar el contenido visual de cada casilla
     for (let i = 0; i < 9; i++) {
@@ -117,31 +116,31 @@ function limpiarCasillas() {
         }
     }
     contador = 0;
-    resultado.innerHTML = ""
+    resultado.innerHTML = "";
 }
 
 //Esta es para que ponga X o O dependiendo del contador que está arriba
 function validacion(casilla) {
-    const marca = document.createElement("h2")
     //Aquí no sé por qué pero hay que poner invertido quién va para que se muestre bien, esto se puede mejorar
     if (contador == 1 && casilla.textContent != "O") {
-        marca.textContent = "X"
-        casilla.textContent = marca.textContent
-        contador++
-        resultado.innerHTML = "Turno de jugador 'O'"
+        casilla.textContent = "X";
+        casilla.classList.add("x");
+
+        contador++;
+        resultado.innerHTML = "Turno de jugador 'O'";
 
     } else if (contador == 2 && casilla.textContent != "X") {
-        marca.textContent = "O"
-        casilla.textContent = marca.textContent
-        contador--
-        resultado.innerHTML = "Turno de jugador 'X'"
+        casilla.textContent = "O";
+        casilla.classList.add("o");
 
+        contador--;
+        resultado.innerHTML = "Turno de jugador 'X'";
     }
-    buscarResultado(casilla.id, marca.textContent)
+
+    buscarResultado(casilla.id, casilla.textContent);
 }
 
 //Esto busca resultados ganadores o empates
-
 function buscarResultado(posicion, marca) {
     if (juegoTerminado) return;
 
@@ -211,5 +210,4 @@ function buscarResultado(posicion, marca) {
     }
 }
 
-
-export { crearCasillas, limpiarCasillas, iniciarPvp, validacion, buscarResultado, incContador, decContador, obtenerContador, juegoTerminado, terminarJuego, reiniciarJuego, cambiarModo}
+export {crearCasillas, limpiarCasillas, iniciarPvp, validacion, buscarResultado, incContador, decContador, obtenerContador, juegoTerminado, terminarJuego, reiniciarJuego, cambiarModo };

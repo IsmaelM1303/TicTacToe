@@ -124,12 +124,52 @@ main div h2 {
     border-radius: 10px;
     transition: all 0.3s ease;
     cursor: pointer;
+    user-select: none;
 }
 
+/* Animación al pasar el mouse */
 .casilla:hover {
-    opacity: 0.7;
-    background-color: rgb(237, 240, 218);
-    color: rgb(149, 1, 37);
+    animation: cambioColor 2.5s infinite alternate;
+    color: #950125;
+    opacity: 0.9;
+}
+
+/* Estilo para jugador X */
+.casilla.x {
+    background-color: #3201C4;
+    color: rgb(237, 240, 218);
+    animation: marcar 0.4s ease forwards;
+}
+
+/* Estilo para jugador O */
+.casilla.o {
+    background-color: #950125;
+    color: rgb(237, 240, 218);
+    animation: marcar 0.4s ease forwards;
+}
+
+/* Animación al marcar una casilla */
+@keyframes marcar { 
+    from {
+        transform: scale(0.5);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Animación de hover */
+@keyframes cambioColor {
+    0% {
+        background-color: rgb(227, 210, 111);
+    }
+
+    100% {
+        background-color: rgb(255, 230, 150);
+    }
 }
 
 #contenedorBotones {

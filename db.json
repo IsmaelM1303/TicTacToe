@@ -1,22 +1,10 @@
 {
   "marcador": [
     {
-      "id": "66ac",
-      "fecha": "20/8/2025, 2:37:55 p. m.",
-      "modo": "Jugador contra jugador",
-      "desenlace": "Ganó el jugador 1"
-    },
-    {
-      "id": "90d6",
-      "fecha": "20/8/2025, 2:38:41 p. m.",
-      "modo": "Jugador contra jugador",
+      "id": "7a24",
+      "fecha": "21/8/2025, 11:49:48 a. m.",
+      "modo": "Jugador contra la maquina",
       "desenlace": "Es empate"
-    },
-    {
-      "id": "47c0",
-      "fecha": "20/8/2025, 3:16:38 p. m.",
-      "modo": "Jugador contra jugador",
-      "desenlace": "Ganó el jugador 1"
     }
   ]
 }

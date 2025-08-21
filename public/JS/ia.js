@@ -1,15 +1,25 @@
 //Importaciones
-import { crearCasillas, buscarResultado, incContador, decContador, obtenerContador, juegoTerminado, cambiarModo} from "./casillas.js";
+import {
+    crearCasillas,
+    buscarResultado,
+    incContador,
+    decContador,
+    obtenerContador,
+    juegoTerminado,
+    cambiarModo
+} from "./casillas.js";
 
 //Datos globales
-const resultado = document.getElementById("mostrarResultado")
+const resultado = document.getElementById("mostrarResultado");
 
 //Esta función inicia el PVE
 function iniciarPve() {
-    const pve = cambiarModo()
-    crearCasillas(pve)
+    const pve = cambiarModo();
+    crearCasillas(pve);
 }
+
 function validacionPve(casilla) {
+
     const marca = document.createElement("h2");
     const contadorActual = obtenerContador();
 
@@ -17,6 +27,8 @@ function validacionPve(casilla) {
     if (contadorActual === 1 && casilla.textContent === "") {
         marca.textContent = "X";
         casilla.textContent = marca.textContent;
+        casilla.classList.add("x");
+
         incContador();
         resultado.innerHTML = "Turno de jugador 'O'";
         buscarResultado(casilla.id, marca.textContent);
@@ -33,57 +45,59 @@ function validacionPve(casilla) {
 //Esta función combina la primera versión con el minimax para que no sea invencible
 function bot() {
     const casillas = document.querySelectorAll(".casilla");
-    if (juegoTerminado) {
-        buscarResultado()
-        return
-    };
+    if (juegoTerminado) return;
 
     const numero = Math.floor(Math.random() * 20) + 1;
-    
 
     //Esto es para que juegue de manera aleatoria
-    if ((numero % 2 === 0 && numero >10) || (numero % 2 !== 0 && numero < 10)) {
-        aleatorio(casillas)
+    if ((numero % 2 === 0 && numero > 10) || (numero % 2 !== 0 && numero < 10)) {
+        aleatorio(casillas);
     } else {
         //Esto es para que juegue de manera analítica con minimax
-        minimax(casillas)
+        minimax(casillas);
     }
 }
-//Esto hace que funcione el jugar aleatoriamente
-function aleatorio(casillas){
-    let jugada;
-        do {
-            jugada = Math.floor(Math.random() * casillas.length);
-        } while (casillas[jugada].textContent !== "");
 
-        casillas[jugada].textContent = "O";
-        buscarResultado(casillas[jugada].id, "O");
+//Esto hace que funcione el jugar aleatoriamente
+function aleatorio(casillas) {
+    let jugada;
+    let intentos = 0;
+    do {
+        jugada = Math.floor(Math.random() * casillas.length);
+        intentos++;
+        if (intentos > 20) return;
+    } while (casillas[jugada].textContent !== "");
+
+    casillas[jugada].textContent = "O";
+    casillas[jugada].classList.add("o");
+
+    buscarResultado(casillas[jugada].id, "O");
 }
 
 //Esto hace que funcione el jugar analizando la mejor jugada
-function minimax(casillas){
+function minimax(casillas) {
     const tablero = Array.from(casillas).map(c => c.textContent);
-        let mejorJugada;
-        let mejorPuntaje = -Infinity;
+    let mejorJugada;
+    let mejorPuntaje = -Infinity;
 
-        for (let i = 0; i < tablero.length; i++) {
-            if (tablero[i] === "") {
-                tablero[i] = "O";
-                const puntaje = simulacion(tablero, 0, false);
-                tablero[i] = "";
-                if (puntaje > mejorPuntaje) {
-                    mejorPuntaje = puntaje;
-                    mejorJugada = i;
-                }
+    for (let i = 0; i < tablero.length; i++) {
+        if (tablero[i] === "") {
+            tablero[i] = "O";
+            const puntaje = simulacion(tablero, 0, false);
+            tablero[i] = "";
+            if (puntaje > mejorPuntaje) {
+                mejorPuntaje = puntaje;
+                mejorJugada = i;
             }
         }
+    }
 
-        if (typeof mejorJugada === "number" && casillas[mejorJugada]) {
-            casillas[mejorJugada].textContent = "O";
-            buscarResultado(casillas[mejorJugada].id, "O");
-        }
+    if (typeof mejorJugada === "number" && casillas[mejorJugada]) {
+        casillas[mejorJugada].textContent = "O";
+        casillas[mejorJugada].classList.add("o");
+        buscarResultado(casillas[mejorJugada].id, "O");
+    }
 }
-
 
 //Esto es lo que simula las partidas
 function simulacion(tablero, profundidad, esBot) {
@@ -113,7 +127,6 @@ function simulacion(tablero, profundidad, esBot) {
         }
         return peorPuntaje;
     }
-
 }
 
 //Esto evalúa cómo está el tablero
@@ -132,5 +145,6 @@ function evaluar(tablero) {
     if (tablero.every(c => c !== "")) return 0; // Empate
     return null; // Juego no terminado
 }
+
 //----------------------------------------------------------------------------------------------------------------
-export { iniciarPve, validacionPve }
+export { iniciarPve, validacionPve };
