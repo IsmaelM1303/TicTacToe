@@ -18,10 +18,32 @@ header {
 
 header h1 {
     margin-top: 2%;
+    margin-left: 4%;
     color: rgb(227, 210, 111);
     font-family: 'Signa', sans-serif;
     font-size: 10vh;
-    text-shadow: 2px 2px 4px rgb(0, 0, 7);
+    text-shadow:
+        0 0 2.5px rgb(227, 210, 111),
+        0 0 5px rgb(227, 210, 111),
+        0 0 8px rgb(255, 215, 0),
+        2px 2px 4px rgb(0, 0, 7);
+}
+
+@keyframes pulseGlow {
+    0% {
+        text-shadow:
+            0 0 2.5px rgb(227, 210, 111),
+            0 0 5px rgb(227, 210, 111),
+            0 0 8px rgb(255, 215, 0),
+            2px 2px 4px rgb(0, 0, 7);
+    }
+
+    100% {
+        text-shadow:
+            0 0 0.7px rgb(227, 210, 111),
+            0 0 1.5px rgb(255, 255, 255),
+            0 0 1.9px rgb(200, 220, 190);
+    }
 }
 
 main {
@@ -29,6 +51,8 @@ main {
     grid-template-columns: 1fr 3fr;
     gap: 20px;
     padding: 2%;
+    grid-template-areas: 
+    "marcadores contenido";
 }
 
 #fondoMarcadores {
@@ -37,14 +61,47 @@ main {
     position: relative;
     overflow: hidden;
     text-align: center;
+    grid-area: marcadores;
 }
 
 main div h2 {
     background-color: rgb(0, 0, 7);
+
     text-align: center;
     padding: 2%;
     font-family: 'Airborne', sans-serif;
     padding-top: 3%;
+    text-shadow:
+        0 0 0.7px rgb(237, 240, 218),
+        0 0 1.4px rgb(255, 255, 255),
+        0 0 1.9px rgb(200, 220, 190);
+}
+
+main div h2:hover {
+    animation: softGlow 0.6s forwards;
+}
+
+@keyframes softGlow {
+    0% {
+        text-shadow:
+            0 0 0.7px rgb(237, 240, 218),
+            0 0 1.5px rgb(255, 255, 255),
+            0 0 1.9px rgb(200, 220, 190);
+    }
+
+    50% {
+        text-shadow:
+            0 0 1.2px rgb(237, 240, 218),
+            0 0 2px rgb(255, 255, 255),
+            0 0 2.5px rgb(200, 220, 190);
+    }
+
+    100% {
+        text-shadow:
+            0 0 1px rgb(237, 240, 218),
+            0 0 1.8px rgb(255, 255, 255),
+            0 0 2.2px rgb(200, 220, 190);
+    }
 }
 
 #contenedorMarcadores {
@@ -78,11 +135,13 @@ main div h2 {
 #gridContenido {
     display: grid;
     grid-template-columns: 2fr 1fr;
+    grid-area: contenido;
 }
 
 #contenedorMarcadores p {
     color: rgb(237, 240, 218);
     font-size: 1.2rem;
+    border-color: transparent;
 }
 
 #contenedorMarcadores::-webkit-scrollbar {
@@ -115,8 +174,7 @@ main div h2 {
 }
 
 .casilla {
-    background-color: rgb(227, 210, 111);
-    color: rgb(0, 0, 7);
+    background-color: rgba(227, 210, 111, 0.8);
     font-size: 2rem;
     display: flex;
     align-items: center;
@@ -129,27 +187,52 @@ main div h2 {
 
 /* Animación al pasar el mouse */
 .casilla:hover {
-    animation: cambioColor 2.5s infinite alternate;
-    color: #950125;
+    animation: glowPulse 1.2s infinite alternate;
+    animation-delay: 1s, 0..1s;
+    color: #ff0040;
     opacity: 0.9;
+    transform: scale(1.05);
 }
+
+
+
+@keyframes glowPulse {
+    0% {
+        box-shadow: 
+            0 0 15px rgba(149, 1, 37, 0.8),
+            0 0 30px rgba(50, 1, 196, 0.6),
+            0 0 45px rgba(255, 0, 64, 0.4);
+    }
+    100% {
+        box-shadow: 
+            0 0 25px rgba(149, 1, 37, 1),
+            0 0 50px rgba(50, 1, 196, 0.9),
+            0 0 70px rgba(255, 0, 64, 0.6);
+    }
+}
+
+
 
 /* Estilo para jugador X */
 .casilla.x {
-    background-color: #3201C4;
+    background-color: rgba(50, 1, 196, 0.5);
     color: rgb(237, 240, 218);
     animation: marcar 0.4s ease forwards;
+
+    box-shadow: 0 0 20px rgba(50, 1, 196, 0.8), 0 0 40px rgba(50, 1, 196, 0.6);
 }
 
 /* Estilo para jugador O */
 .casilla.o {
-    background-color: #950125;
+    background-color: rgba(149, 1, 37,0.5);
     color: rgb(237, 240, 218);
     animation: marcar 0.4s ease forwards;
+    box-shadow: 0 0 20px rgba(149, 1, 37, 0.8), 0 0 40px rgba(149, 1, 37, 0.6);
 }
 
+
 /* Animación al marcar una casilla */
-@keyframes marcar { 
+@keyframes marcar {
     from {
         transform: scale(0.5);
         opacity: 0;
@@ -161,14 +244,13 @@ main div h2 {
     }
 }
 
-/* Animación de hover */
 @keyframes cambioColor {
     0% {
-        background-color: rgb(227, 210, 111);
+        background-color: rgb(149, 1, 37);
     }
 
     100% {
-        background-color: rgb(255, 230, 150);
+        background-color: rgb(50, 1, 196);
     }
 }
 
@@ -198,11 +280,110 @@ main div h2 {
     font-size: 1rem;
     border-radius: 8px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
     width: 80%;
     margin-left: 10%;
+    box-shadow: 0 0 15px rgba(50, 1, 196, 0.7);
+    opacity: 0.7;
 }
 
 #contenedorBotones button:hover {
     background-color: rgb(149, 1, 37);
+    box-shadow: 0 0 20px rgba(149, 1, 37, 0.8);
+    opacity: 0.7;
+}
+
+#contenedorBotones h3 {
+    text-align: center;
+    padding: 2%;
+    font-family: 'Airborne', sans-serif;
+    padding-top: 3%;
+    text-shadow:
+        0 0 0.7px rgb(237, 240, 218),
+        0 0 1.4px rgb(255, 255, 255),
+        0 0 1.9px rgb(200, 220, 190);
+}
+
+#contenedorBotones h3:hover {
+    animation: softGlow 0.6s forwards;
+}
+
+
+
+/*Para que sea responsivo*/
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 6vh;
+        margin-left: 0;
+    }
+
+    main {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "contenido"
+            "marcadores";
+    }
+
+    #gridContenido {
+        grid-template-columns: 1fr;
+    }
+
+    #contenedorCasillas {
+        width: 90vw;
+        height: auto;
+        gap: 10px;
+    }
+
+    #contenedorMarcadores div {
+        font-size: 4vw;
+        margin-left: 0;
+    }
+
+    #contenedorBotones button {
+        width: 90%;
+        margin-left: 5%;
+    }
+
+    #contenedorMarcadores {
+        position: relative;
+        height: auto;
+    }
+
+    #contenedorCasillas {
+        width: 70vw;
+        height: 60vh;
+    }
+
+    #fondoMarcadores {
+    overflow: scroll;
+}
+    
+}
+
+@media (max-width: 480px) {
+    header h1 {
+        font-size: 5vh;
+    }
+
+    .casilla {
+        font-size: 1.5rem;
+    }
+
+    #contenedorBotones h3 {
+        font-size: 1.2rem;
+    }
+
+    #contenedorMarcadores p {
+        font-size: 1rem;
+    }
+
+    #contenedorMarcadores {
+        position: relative;
+        height: auto;
+    }
+
+    #contenedorCasillas {
+        width: 70vw;
+        height: 60vh;
+    }
 }
