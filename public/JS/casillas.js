@@ -55,9 +55,9 @@ function terminarJuego(num, j1, j2) {
 
     //Descubrí una forma nueva de declarar condicionales
     if (num === 1) {
-        desenlaceJuego = ganaJ1 ? "Ganó el jugador 1" : "Ganó el jugador 2";
+        desenlaceJuego = ganaJ1 ? "Gana el jugador 1" : "Gana el jugador 2";
     } else if (num === 2) {
-        desenlaceJuego = ganaJ1 ? "Ganó el jugador" : "Ganó la máquina";
+        desenlaceJuego = ganaJ1 ? "Gana el jugador" : "Gana la máquina";
     }
 }
 

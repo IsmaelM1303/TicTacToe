@@ -36,25 +36,6 @@ main {
     height: 70vh;
     position: relative;
     overflow: hidden;
-    background:
-        radial-gradient(ellipse at 20% 30%, rgb(50, 1, 196) 0%, transparent 35%),
-        radial-gradient(ellipse at 70% 40%, rgb(149, 1, 37) 0%, transparent 35%),
-        radial-gradient(ellipse at 50% 50%, rgb(0, 0, 7) 0%, rgb(0, 0, 7) 100%),
-        radial-gradient(circle at 10% 80%, rgb(50, 1, 196) 0%, transparent 20%),
-        radial-gradient(circle at 85% 25%, rgb(149, 1, 37) 0%, transparent 20%),
-        radial-gradient(ellipse at 60% 70%, rgb(50, 1, 196) 0%, transparent 20%),
-        radial-gradient(circle at 15% 15%, rgb(149, 1, 37) 0%, transparent 8%),
-        radial-gradient(circle at 90% 10%, rgb(50, 1, 196) 0%, transparent 8%),
-        radial-gradient(circle at 40% 90%, rgb(149, 1, 37) 0%, transparent 8%),
-        radial-gradient(circle at 75% 85%, rgb(50, 1, 196) 0%, transparent 8%),
-        radial-gradient(ellipse at 30% 60%, rgb(149, 1, 37) 0%, transparent 8%),
-        radial-gradient(circle at 20% 50%, rgb(50, 1, 196) 0%, transparent 6%),
-        radial-gradient(circle at 80% 20%, rgb(149, 1, 37) 0%, transparent 6%),
-        radial-gradient(ellipse at 55% 15%, rgb(50, 1, 196) 0%, transparent 6%),
-        radial-gradient(circle at 35% 75%, rgb(149, 1, 37) 0%, transparent 6%);
-    background-size: 400% 400%;
-    animation: caosParticulas 8s infinite linear;
-    filter: contrast(2.2) brightness(1.5);
     text-align: center;
 }
 
@@ -62,52 +43,17 @@ main div h2 {
     background-color: rgb(0, 0, 7);
     text-align: center;
     padding: 2%;
+    font-family: 'Airborne', sans-serif;
+    padding-top: 3%;
 }
 
-@keyframes caosParticulas {
-    0% {
-        background-position: 0% 0%;
-    }
+#contenedorMarcadores {
+    position: absolute;
+    background-color: rgb(0, 0, 7);
+    width: 100%;
+    height: 100vh;
+    overflow-y: auto;
 
-    10% {
-        background-position: 25% 15%;
-    }
-
-    20% {
-        background-position: 50% 30%;
-    }
-
-    30% {
-        background-position: 75% 45%;
-    }
-
-    40% {
-        background-position: 100% 60%;
-    }
-
-    50% {
-        background-position: 75% 75%;
-    }
-
-    60% {
-        background-position: 50% 90%;
-    }
-
-    70% {
-        background-position: 25% 75%;
-    }
-
-    80% {
-        background-position: 0% 60%;
-    }
-
-    90% {
-        background-position: 25% 30%;
-    }
-
-    100% {
-        background-position: 0% 0%;
-    }
 }
 
 #contenedorMarcadores {
@@ -119,9 +65,17 @@ main div h2 {
     padding: 20px;
     overflow-y: auto;
     height: 100%;
+    font-family: 'eurostyle', sans-serif;
+
 }
 
-#gridContenido{
+#contenedorMarcadores div {
+    margin-left: 3%;
+    font-size: 2vw;
+    margin-top: 3%;
+}
+
+#gridContenido {
     display: grid;
     grid-template-columns: 2fr 1fr;
 }
@@ -162,13 +116,12 @@ main div h2 {
 
 .casilla {
     background-color: rgb(227, 210, 111);
-    color: white;
+    color: rgb(0, 0, 7);
     font-size: 2rem;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 10px;
-    opacity: 0.4;
     transition: all 0.3s ease;
     cursor: pointer;
 }
@@ -196,6 +149,7 @@ main div h2 {
 }
 
 #contenedorBotones button {
+    font-family: 'Airborne', sans-serif;
     background-color: rgb(50, 1, 196);
     color: rgb(237, 240, 218);
     border: none;
