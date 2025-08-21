@@ -1,24 +1,214 @@
-main{
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-image: url(../IMG/fondo.jpg);
+    background-size: cover;
+    font-family: 'Avenir', sans-serif;
+    color: rgb(237, 240, 218);
+}
+
+header {
+    text-align: center;
+    margin-left: -3%;
+}
+
+header h1 {
+    margin-top: 2%;
+    color: rgb(227, 210, 111);
+    font-family: 'Signa', sans-serif;
+    font-size: 10vh;
+    text-shadow: 2px 2px 4px rgb(0, 0, 7);
+}
+
+main {
     display: grid;
     grid-template-columns: 1fr 3fr;
+    gap: 20px;
+    padding: 2%;
 }
-#contenedorCasillas{
+
+#fondoMarcadores {
+    width: 100%;
+    height: 70vh;
+    position: relative;
+    overflow: hidden;
+    background:
+        radial-gradient(ellipse at 20% 30%, rgb(50, 1, 196) 0%, transparent 35%),
+        radial-gradient(ellipse at 70% 40%, rgb(149, 1, 37) 0%, transparent 35%),
+        radial-gradient(ellipse at 50% 50%, rgb(0, 0, 7) 0%, rgb(0, 0, 7) 100%),
+        radial-gradient(circle at 10% 80%, rgb(50, 1, 196) 0%, transparent 20%),
+        radial-gradient(circle at 85% 25%, rgb(149, 1, 37) 0%, transparent 20%),
+        radial-gradient(ellipse at 60% 70%, rgb(50, 1, 196) 0%, transparent 20%),
+        radial-gradient(circle at 15% 15%, rgb(149, 1, 37) 0%, transparent 8%),
+        radial-gradient(circle at 90% 10%, rgb(50, 1, 196) 0%, transparent 8%),
+        radial-gradient(circle at 40% 90%, rgb(149, 1, 37) 0%, transparent 8%),
+        radial-gradient(circle at 75% 85%, rgb(50, 1, 196) 0%, transparent 8%),
+        radial-gradient(ellipse at 30% 60%, rgb(149, 1, 37) 0%, transparent 8%),
+        radial-gradient(circle at 20% 50%, rgb(50, 1, 196) 0%, transparent 6%),
+        radial-gradient(circle at 80% 20%, rgb(149, 1, 37) 0%, transparent 6%),
+        radial-gradient(ellipse at 55% 15%, rgb(50, 1, 196) 0%, transparent 6%),
+        radial-gradient(circle at 35% 75%, rgb(149, 1, 37) 0%, transparent 6%);
+    background-size: 400% 400%;
+    animation: caosParticulas 8s infinite linear;
+    filter: contrast(2.2) brightness(1.5);
+    text-align: center;
+}
+
+main div h2 {
+    background-color: rgb(0, 0, 7);
+    text-align: center;
+    padding: 2%;
+}
+
+@keyframes caosParticulas {
+    0% {
+        background-position: 0% 0%;
+    }
+
+    10% {
+        background-position: 25% 15%;
+    }
+
+    20% {
+        background-position: 50% 30%;
+    }
+
+    30% {
+        background-position: 75% 45%;
+    }
+
+    40% {
+        background-position: 100% 60%;
+    }
+
+    50% {
+        background-position: 75% 75%;
+    }
+
+    60% {
+        background-position: 50% 90%;
+    }
+
+    70% {
+        background-position: 25% 75%;
+    }
+
+    80% {
+        background-position: 0% 60%;
+    }
+
+    90% {
+        background-position: 25% 30%;
+    }
+
+    100% {
+        background-position: 0% 0%;
+    }
+}
+
+#contenedorMarcadores {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 20px;
+    overflow-y: auto;
+    height: 100%;
+}
+
+#gridContenido{
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+}
+
+#contenedorMarcadores p {
+    color: rgb(237, 240, 218);
+    font-size: 1.2rem;
+}
+
+#contenedorMarcadores::-webkit-scrollbar {
+    width: 8px;
+}
+
+#contenedorMarcadores::-webkit-scrollbar-track {
+    background: rgb(0, 0, 7);
+}
+
+#contenedorMarcadores::-webkit-scrollbar-thumb {
+    background-color: rgb(149, 1, 37);
+    border-radius: 4px;
+    border: 2px solid rgb(0, 0, 7);
+}
+
+#contenedorMarcadores::-webkit-scrollbar-thumb:hover {
+    background-color: rgb(50, 1, 196);
+}
+
+
+#contenedorCasillas {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
-    gap: 10px;
-    width: 400px;
-    height: 400px;
+    gap: 15px;
+    width: 40vw;
+    height: 70vh;
+    margin: 0 auto;
 }
 
 .casilla {
-    background-color: #4CAF50;
+    background-color: rgb(227, 210, 111);
     color: white;
-    font-size: 24px;
+    font-size: 2rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 100%;
-    height: 100%;
-    box-sizing: border-box;
+    border-radius: 10px;
+    opacity: 0.4;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.casilla:hover {
+    opacity: 0.7;
+    background-color: rgb(237, 240, 218);
+    color: rgb(149, 1, 37);
+}
+
+#contenedorBotones {
+    margin-top: 30px;
+    text-align: center;
+}
+
+#contenedorBotones h3 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    color: rgb(237, 240, 218);
+}
+
+#contenedorBotones div {
+    text-align: left;
+    display: grid;
+}
+
+#contenedorBotones button {
+    background-color: rgb(50, 1, 196);
+    color: rgb(237, 240, 218);
+    border: none;
+    padding: 10px 20px;
+    margin: 10px;
+    font-size: 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 80%;
+    margin-left: 10%;
+}
+
+#contenedorBotones button:hover {
+    background-color: rgb(149, 1, 37);
 }
