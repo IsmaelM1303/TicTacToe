@@ -1,13 +1,5 @@
 //Importaciones
-import {
-    crearCasillas,
-    buscarResultado,
-    incContador,
-    decContador,
-    obtenerContador,
-    juegoTerminado,
-    cambiarModo
-} from "./casillas.js";
+import { crearCasillas, buscarResultado, incContador, decContador, obtenerContador, juegoTerminado, cambiarModo, reproducirSegmento } from "./casillas.js";
 
 //Datos globales
 const resultado = document.getElementById("mostrarResultado");
@@ -19,23 +11,42 @@ function iniciarPve() {
 }
 
 function validacionPve(casilla) {
-
     const marca = document.createElement("h2");
     const contadorActual = obtenerContador();
 
+    if (juegoTerminado) return;
+
     // Turno de X
     if (contadorActual === 1 && casilla.textContent === "") {
+        reproducirSegmento(0.35, 1);
         marca.textContent = "X";
         casilla.textContent = marca.textContent;
         casilla.classList.add("x");
 
         incContador();
-        resultado.innerHTML = "Turno de jugador 'O'";
         buscarResultado(casilla.id, marca.textContent);
 
-        //Turno de O, uso un timeout para que parezca que piensa
+        // Verificar si el juego terminó después de la jugada de X
+        if (juegoTerminado) {
+            resultado.innerHTML = "Juego terminado";
+            return;
+        }
+
+        resultado.innerHTML = "Turno de jugador 'O'";
+
+        // Turno de O (bot)
         setTimeout(() => {
+            if (juegoTerminado) return; // Verificar antes de que el bot juegue
+
+            reproducirSegmento(0.35, 1);
             bot();
+
+            // Verificar si el juego terminó después de la jugada del bot
+            if (juegoTerminado) {
+                resultado.innerHTML = "Juego terminado";
+                return;
+            }
+
             decContador();
             resultado.innerHTML = "Turno de jugador 'X'";
         }, 1000);
@@ -60,42 +71,50 @@ function bot() {
 
 //Esto hace que funcione el jugar aleatoriamente
 function aleatorio(casillas) {
-    let jugada;
-    let intentos = 0;
-    do {
-        jugada = Math.floor(Math.random() * casillas.length);
-        intentos++;
-        if (intentos > 20) return;
-    } while (casillas[jugada].textContent !== "");
+    if (juegoTerminado) {
+        return
+    } else {
+        let jugada;
+        let intentos = 0;
+        do {
+            jugada = Math.floor(Math.random() * casillas.length);
+            intentos++;
+            if (intentos > 20) return;
+        } while (casillas[jugada].textContent !== "");
 
-    casillas[jugada].textContent = "O";
-    casillas[jugada].classList.add("o");
+        casillas[jugada].textContent = "O";
+        casillas[jugada].classList.add("o");
 
-    buscarResultado(casillas[jugada].id, "O");
+        buscarResultado(casillas[jugada].id, "O");
+    }
 }
 
 //Esto hace que funcione el jugar analizando la mejor jugada
 function minimax(casillas) {
-    const tablero = Array.from(casillas).map(c => c.textContent);
-    let mejorJugada;
-    let mejorPuntaje = -Infinity;
+    if (juegoTerminado) {
+        return
+    } else {
+        const tablero = Array.from(casillas).map(c => c.textContent);
+        let mejorJugada;
+        let mejorPuntaje = -Infinity;
 
-    for (let i = 0; i < tablero.length; i++) {
-        if (tablero[i] === "") {
-            tablero[i] = "O";
-            const puntaje = simulacion(tablero, 0, false);
-            tablero[i] = "";
-            if (puntaje > mejorPuntaje) {
-                mejorPuntaje = puntaje;
-                mejorJugada = i;
+        for (let i = 0; i < tablero.length; i++) {
+            if (tablero[i] === "") {
+                tablero[i] = "O";
+                const puntaje = simulacion(tablero, 0, false);
+                tablero[i] = "";
+                if (puntaje > mejorPuntaje) {
+                    mejorPuntaje = puntaje;
+                    mejorJugada = i;
+                }
             }
         }
-    }
 
-    if (typeof mejorJugada === "number" && casillas[mejorJugada]) {
-        casillas[mejorJugada].textContent = "O";
-        casillas[mejorJugada].classList.add("o");
-        buscarResultado(casillas[mejorJugada].id, "O");
+        if (typeof mejorJugada === "number" && casillas[mejorJugada]) {
+            casillas[mejorJugada].textContent = "O";
+            casillas[mejorJugada].classList.add("o");
+            buscarResultado(casillas[mejorJugada].id, "O");
+        }
     }
 }
 

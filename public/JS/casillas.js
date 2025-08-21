@@ -98,6 +98,28 @@ function crearCasillas(n) {
         });
     }
 }
+//Para que suene, esto lo tuve que buscar
+function reproducirSegmento(inicio, duracion) {
+    const sonido = document.getElementById('sonidoClick');
+    // Detiene cualquier reproducción anterior
+    sonido.pause();
+    sonido.currentTime = inicio;
+    sonido.play();
+
+    // Limpia cualquier evento anterior
+    sonido.removeEventListener('timeupdate', detener);
+
+    // Define la función de corte
+    function detener() {
+        if (sonido.currentTime >= inicio + duracion) {
+            sonido.pause();
+            sonido.removeEventListener('timeupdate', detener);
+        }
+    }
+
+    // Añade el evento para cortar el sonido
+    sonido.addEventListener('timeupdate', detener);
+}
 
 //Esto limpia las cosas
 function limpiarCasillas() {
@@ -123,13 +145,16 @@ function limpiarCasillas() {
 function validacion(casilla) {
     //Aquí no sé por qué pero hay que poner invertido quién va para que se muestre bien, esto se puede mejorar
     if (contador == 1 && casilla.textContent != "O") {
+        reproducirSegmento(0.35, 1)
         casilla.textContent = "X";
         casilla.classList.add("x");
+
 
         contador++;
         resultado.innerHTML = "Turno de jugador 'O'";
 
     } else if (contador == 2 && casilla.textContent != "X") {
+        reproducirSegmento(0.35, 1)
         casilla.textContent = "O";
         casilla.classList.add("o");
 
@@ -210,4 +235,4 @@ function buscarResultado(posicion, marca) {
     }
 }
 
-export {crearCasillas, limpiarCasillas, iniciarPvp, validacion, buscarResultado, incContador, decContador, obtenerContador, juegoTerminado, terminarJuego, reiniciarJuego, cambiarModo };
+export { crearCasillas, limpiarCasillas, iniciarPvp, validacion, buscarResultado, incContador, decContador, obtenerContador, juegoTerminado, terminarJuego, reiniciarJuego, cambiarModo, reproducirSegmento };
