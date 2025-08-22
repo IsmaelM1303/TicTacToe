@@ -2,6 +2,7 @@
 import { validacionPve } from "./ia.js";
 import { createMarcador } from "../services/CRUD_marcadores.js";
 import { mostrarMarcadores } from "./marcadores.js";
+import { reproducirSegmento, clickBotones, ganaAzul, ganaRojo } from "./funcionesExtra.js";
 
 //Datos globales
 export let contador = 0;
@@ -29,7 +30,10 @@ function obtenerContador() {
 //Esta función inicia el PVP
 function iniciarPvp() {
     modo = 1;
-    crearCasillas(modo);
+    clickBotones()
+    setTimeout(() => {
+        crearCasillas(modo);
+    }, 300);
 }
 
 //Funciones de verificación de juego
@@ -98,28 +102,7 @@ function crearCasillas(n) {
         });
     }
 }
-//Para que suene, esto lo tuve que buscar
-function reproducirSegmento(inicio, duracion) {
-    const sonido = document.getElementById('sonidoClick');
-    // Detiene cualquier reproducción anterior
-    sonido.pause();
-    sonido.currentTime = inicio;
-    sonido.play();
 
-    // Limpia cualquier evento anterior
-    sonido.removeEventListener('timeupdate', detener);
-
-    // Define la función de corte
-    function detener() {
-        if (sonido.currentTime >= inicio + duracion) {
-            sonido.pause();
-            sonido.removeEventListener('timeupdate', detener);
-        }
-    }
-
-    // Añade el evento para cortar el sonido
-    sonido.addEventListener('timeupdate', detener);
-}
 
 //Esto limpia las cosas
 function limpiarCasillas() {
@@ -187,6 +170,7 @@ function buscarResultado(posicion, marca) {
         if (modo === 1) {
             if (contador == 2) {
                 resultado.innerHTML = "Gana jugador 1";
+                ganaAzul()
                 setTimeout(() => {
                     terminarJuego(1, 1, 0);
                     limpiarCasillas();
@@ -194,6 +178,7 @@ function buscarResultado(posicion, marca) {
                 }, 2000);
             } else if (contador == 1) {
                 resultado.innerHTML = "Gana jugador 2";
+                ganaRojo()
                 setTimeout(() => {
                     terminarJuego(1, 0, 1);
                     limpiarCasillas();
@@ -204,6 +189,7 @@ function buscarResultado(posicion, marca) {
             // PvE: marca determina quién ganó
             if (marca === "X") {
                 resultado.innerHTML = "¡Gana el jugador!";
+                ganaAzul()
                 setTimeout(() => {
                     terminarJuego(2, 1, 0); // modo 2, humano gana
                     limpiarCasillas();
@@ -211,6 +197,7 @@ function buscarResultado(posicion, marca) {
                 }, 2000);
             } else if (marca === "O") {
                 resultado.innerHTML = "¡Gana la computadora!";
+                ganaRojo()
                 setTimeout(() => {
                     terminarJuego(2, 0, 1); // modo 2, computadora gana
                     limpiarCasillas();

@@ -9,7 +9,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Ruta principal
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'pages/index.html'));
+    res.sendFile(path.join(__dirname, 'public', 'pages', 'index.html'));
+});
+
+// Ruta específica para juego.html
+app.get('/juego.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'pages', 'juego.html'));
 });
 
 // Ruta para obtener usuarios desde json-server

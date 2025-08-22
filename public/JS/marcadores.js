@@ -51,7 +51,7 @@ function crearMostrar(marcador) {
     divContenedor.appendChild(modoMarcador)
     divContenedor.appendChild(desenlaceMarcador)
 
-    contenedorMarcadores.appendChild(divContenedor)
+    contenedorMarcadores.prepend(divContenedor)
 }
 
 export { mostrarMarcadores }

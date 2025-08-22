@@ -1,13 +1,18 @@
 //Importaciones
-import { crearCasillas, buscarResultado, incContador, decContador, obtenerContador, juegoTerminado, cambiarModo, reproducirSegmento } from "./casillas.js";
+import { crearCasillas, buscarResultado, incContador, decContador, obtenerContador, juegoTerminado, cambiarModo } from "./casillas.js";
+import { reproducirSegmento } from "./funcionesExtra.js";
+import { clickBotones } from "./funcionesExtra.js";
 
 //Datos globales
 const resultado = document.getElementById("mostrarResultado");
 
 //Esta función inicia el PVE
 function iniciarPve() {
-    const pve = cambiarModo();
-    crearCasillas(pve);
+    clickBotones()
+    setTimeout(() => {
+        const pve = cambiarModo();
+        crearCasillas(pve);
+    }, 300);
 }
 
 function validacionPve(casilla) {

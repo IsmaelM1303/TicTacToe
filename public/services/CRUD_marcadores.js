@@ -1,4 +1,4 @@
-//Esta es la función que lee los productos
+//Esta es la función que lee los marcadores
 async function getMarcador() {
     try {
         const response = await fetch('http://localhost:3001/marcador', {
@@ -8,18 +8,20 @@ async function getMarcador() {
             }
         })
 
-        const productos = await response.json()
-        return productos
+        const marcador = await response.json()
+        return marcador
 
     } catch (error) {
         console.log("Ocurrió un error al obtener el marcador" + error)
     }
 }
 
-//Esta es la función que crea los productos
+
+
+//Esta es la función que crea los marcadores
 async function createMarcador(nuevoMarcador) {
     try {
-        const response = await fetch('http://localhost:3001/productos', {
+        const response = await fetch('http://localhost:3001/marcador', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -27,18 +29,18 @@ async function createMarcador(nuevoMarcador) {
             body: JSON.stringify(nuevoMarcador)
         })
 
-        const productos = await response.json()
-        return productos
+        const marcador = await response.json()
+        return marcador
 
     } catch (error) {
         console.log("Ocurrió un error al crear el marcador" + error)
     }
 }
 
-//Esta es la función que elimina los productos
+//Esta es la función que elimina los marcadores
 async function deleteMarcador(id) {
     try {
-        const url = 'http://localhost:3001/productos/' + id
+        const url = 'http://localhost:3001/marcador/' + id
         await fetch(url, {
             method: 'DELETE',
             headers: {
@@ -52,10 +54,10 @@ async function deleteMarcador(id) {
     }
 }
 
-//Esta es la función que actualiza los productos
+//Esta es la función que actualiza los marcadores
 async function updateMarcador(id, datosActualizados) {
     try {
-        const url = 'http://localhost:3001/productos/' + id
+        const url = 'http://localhost:3001/marcador/' + id
         await fetch(url, {
             method: 'PUT',
             headers: {

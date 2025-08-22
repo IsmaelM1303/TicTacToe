@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic Tac Toe</title>
+    <link rel="stylesheet" href="../CSS/main.css">
+    <link href="https://fonts.cdnfonts.com/css/avenir" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/signa" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/eurostile" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/airborne" rel="stylesheet">
+</head>
+
+<body>
+    <header>
+        <h1>Juego de Tic Tac Toe</h1>
+    </header>
+    <main>
+        <div>
+            <h2>Marcadores:</h2>
+            <div id="fondoMarcadores">
+                <div id="contenedorMarcadores">
+                    
+                </div>
+            </div>
+        </div>
+        <div id="gridContenido">
+            <div id="contenedorCasillas">
+            </div>
+            <div id="contenedorBotones">
+                <h3 id="mostrarResultado"></h3>
+                <div>
+                    <button id="btnPve">Jugar vs Bot</button>
+                    <button id="btnPvp">Jugador vs Jugador</button>
+                    <button id="btnMusic">Activar-Desactivar música</button>
+                    <button id="cerrarSesion">Cerrar Sesión</button>
+                </div>
+            </div>
+        </div>
+    </main>
+    <audio id="sonidoClickTablero" src="../sonidos/videoplayback.weba" preload="auto"></audio>
+    <audio id="sonidoClickBoton" src="../sonidos/mouse-click-198485.mp3" preload="auto"></audio>
+    
+    <audio id="fondo" src="../sonidos/backgroundMusic.mp3" autoplay loop></audio>
+    <script type="module" src="../JS/main.js"></script>
+    <div id="pintarPantalla"></div>
+</body>
+
+</html>

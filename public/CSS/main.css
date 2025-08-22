@@ -123,6 +123,8 @@ main div h2:hover {
     overflow-y: auto;
     height: 100%;
     font-family: 'eurostyle', sans-serif;
+    display: flex;
+    flex-direction: column;
 
 }
 
@@ -217,7 +219,7 @@ main div h2:hover {
 .casilla.x {
     background-color: rgba(50, 1, 196, 0.5);
     color: rgb(237, 240, 218);
-    animation: marcar 0.4s ease forwards;
+    animation: marcar 1s ease forwards;
 
     box-shadow: 0 0 20px rgba(50, 1, 196, 0.8), 0 0 40px rgba(50, 1, 196, 0.6);
 }
@@ -226,15 +228,39 @@ main div h2:hover {
 .casilla.o {
     background-color: rgba(149, 1, 37,0.5);
     color: rgb(237, 240, 218);
-    animation: marcar 0.4s ease forwards;
+    animation: marcar 1s ease forwards;
     box-shadow: 0 0 20px rgba(149, 1, 37, 0.8), 0 0 40px rgba(149, 1, 37, 0.6);
 }
+
+#pintarPantalla {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: transparent;
+    z-index: 9999;
+    pointer-events: none;
+    transition: background-color 0.5s ease;
+}
+
+#pintarPantalla.activeBlue {
+    background-color: rgba(50, 1, 196, 0.5);
+}
+
+#pintarPantalla.activeRed {
+    background-color: rgba(149, 1, 37, 0.5);
+}
+
+
+
+
 
 
 /* Animación al marcar una casilla */
 @keyframes marcar {
     from {
-        transform: scale(0.5);
+        transform: scale(0.2);
         opacity: 0;
     }
 

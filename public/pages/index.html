@@ -4,41 +4,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tic Tac Toe</title>
-    <link rel="stylesheet" href="../CSS/main.css">
-    <link href="https://fonts.cdnfonts.com/css/avenir" rel="stylesheet">
-    <link href="https://fonts.cdnfonts.com/css/signa" rel="stylesheet">
-    <link href="https://fonts.cdnfonts.com/css/eurostile" rel="stylesheet">
-    <link href="https://fonts.cdnfonts.com/css/airborne" rel="stylesheet">
+    <title>Login TicTacToe</title>
+    <link rel="stylesheet" href="../CSS/usuarios.css">
 </head>
 
 <body>
-    <header>
+    <header id="header">
         <h1>Juego de Tic Tac Toe</h1>
     </header>
     <main>
-        <div>
-            <h2>Marcadores:</h2>
-            <div id="fondoMarcadores">
-                <div id="contenedorMarcadores">
-    
+        <div id="inicioLogin">
+            <div id="contenedorFormulario">
+                <div class="datos">
+                    <label>Nombre de usuario:</label>
+                    <input type="text" placeholder="Nombre" class="inputLogin" id="nombreLogin">
+                </div>
+                <div class="datos">
+                    <label>Contraseña:</label>
+                    <input type="password" placeholder="Password" class="inputLogin" id="passwordLogin">
                 </div>
             </div>
+            <button id="inicioSesion">Iniciar sesión</button>
         </div>
-        <div id="gridContenido">
-            <div id="contenedorCasillas">
-            </div>
-            <div id="contenedorBotones">
-                <h3 id="mostrarResultado"></h3>
+        <div id="loginExito">
+            <div id="crearUsuario">
+                <div class="datos">
+                    <label>Ingrese su nombre de usuario</label>
+                    <input type="text" placeholder="nombre de usuario" id="inputUsuario">
+                </div>
+                <div class="datos">
+                    <label>Ingrese la contraseña</label>
+                    <input type="password" placeholder="contraseña" id="inputPassword">
+                </div>
                 <div>
-                    <button id="btnPve">Jugar vs Bot</button>
-                    <button id="btnPvp">Jugador vs Jugador</button>
+                    <button id="agregarUsuario">Agregar usuarios</button>
                 </div>
             </div>
+            <div id="mostrarUsuarios"></div>
         </div>
     </main>
-    <audio id="sonidoClick" src="../sonidos/videoplayback.weba" preload="auto"></audio>
-    <script type="module" src="../JS/main.js"></script>
+    <script type="module" src="../JS/usuarios.js"></script>
 </body>
 
 </html>
